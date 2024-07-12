@@ -4,19 +4,52 @@ import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 
 export default function OffCanvasAddBook(props) {
-  const { showOffCanvas, handleClose, onSubmitHandle, authors, genres } = props;
+  const { showOffCanvas, handleClose, onSubmitHandle, authors, genres, bookToEdit } = props;
 
+  const [title, setCategory] = useState(bookToEdit.title);
+  const [description, setDescription] = useState(bookToEdit.description);
+  const [price, setPrice] = useState(bookToEdit.price);
+  const [publishDate, setPublishDate] = useState(bookToEdit.publication_date);
+  const [genreId, setGenreId] = useState(bookToEdit.genre_id);
+  const [authorId, setAuthorId] = useState(bookToEdit.author_id);
+
+  const defaultTitle = bookToEdit.title;
+  const defaultDescription = bookToEdit.description;
+  const defaultPrice = bookToEdit.price;
+  const defaultPublishDate = getFormattedDateString(bookToEdit.publication_date);
+  const defaultGenreId= bookToEdit.genre_id;
+  const defaultAuthorId= bookToEdit.author_id;
+
+
+  function getFormattedDateString(dateStr){
+    let  date = new Date(dateStr);
+
+    let month = date.getMonth() + 1;
+    let day = date.getDate()
+
+    // if (month.toString.length == 1) monthStr = "0" + month;
+    // if (day.toString.length == 1) dayStr = "0" + day;
+    
+     return date.getFullYear() + '-' 
+          + ((month.toString().length === 1)? "0" + month : month) + '-' 
+          + ((day.toString().length === 1)? "0" + day : day);
+   }
+
+ //const defaultPublishDate = "2022-11-02";
+// const defaultPublishDate = "2024-12-31";
+ 
+ 
   return (
     <Offcanvas
       show={showOffCanvas}
       onHide={handleClose}
       placement="end" //"bottom" //end
-      id="offcanvas-addbook"
-      //backdrop="static"
+      id="offcanvas-editbook"
+    //  backdrop="static"
     >
       <Offcanvas.Header style={{ marginTop: "30px" }} closeButton>
         <Offcanvas.Title id="offcanvas-addbook-title">
-          Add a book:
+          Edit & Update Book Details:
         </Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
@@ -25,25 +58,27 @@ export default function OffCanvasAddBook(props) {
         >
           <Form className="mt-50" onSubmit={onSubmitHandle}>
             <div className="d-grid gap-3">
-              <Form.Group controlId="title-frmgrp-id">
+              <Form.Group controlId="etitle-frmgrp-id">
                 <Form.Label>Title</Form.Label>
                 <Form.Control
                   size="sm"
                   type="text"
                   name="book_title"
+                  defaultValue={defaultTitle}
                   placeholder=""
                   // onChange={usernameAvalabilityChk}
                 />
               </Form.Group>
 
-              <Form.Group controlId="genre-frmgrp-id">
+              <Form.Group controlId="egenre-frmgrp-id">
                 <Form.Label>Genre</Form.Label>
                 <Form.Select
-                  id="genre-select-id"
+                  id="egenre-select-id"
                   name="book_genre_id"
                   // ref={categoriesForUpdateTaskRef}
                   size="sm"
                   className="mb-3"
+                  defaultValue={defaultGenreId}
                   // defaultValue={defaultCategory}
                   // value={category}
                   // // onChange={(event)=> setCategory(event.target.value)}
@@ -58,14 +93,15 @@ export default function OffCanvasAddBook(props) {
                 </Form.Select>
               </Form.Group>
 
-              <Form.Group controlId="author-frmgrp-id">
+              <Form.Group controlId="eauthor-frmgrp-id">
                 <Form.Label>Author</Form.Label>
                 <Form.Select
-                  id="authors-select-id"
+                  id="eauthors-select-id"
                   name="book_author_id"
                   // ref={categoriesForUpdateTaskRef}
                   size="sm"
                   className="mb-3"
+                  defaultValue={defaultAuthorId}
                   // defaultValue={defaultCategory}
                   // value={category}
                   // // onChange={(event)=> setCategory(event.target.value)}
@@ -80,37 +116,52 @@ export default function OffCanvasAddBook(props) {
                 </Form.Select>
               </Form.Group>
 
-              <Form.Group controlId="price-frmgrp-id">
+              <Form.Group controlId="eprice-frmgrp-id">
                 <Form.Label>Price</Form.Label>
                 <Form.Control
                   size="sm"
                   type="text"
                   name="book_price"
+                  defaultValue={defaultPrice}
                   placeholder=""
                   // onChange={usernameAvalabilityChk}
                 />
               </Form.Group>
 
-              <Form.Group controlId="description-frmgrp-id">
+              <Form.Group controlId="edescription-frmgrp-id">
                 <Form.Label>Description</Form.Label>
                 <Form.Control
                   size="sm"
                   as="textarea"
                   name="book_description"
+                  defaultValue={defaultPublishDate}
                   placeholder=""
                   // onChange={usernameAvalabilityChk}
                 />
               </Form.Group>
 
-              <Form.Group controlId="publish-date-frmgrp-id">
+              <Form.Group controlId="epublish-date-frmgrp-id">
                 <Form.Label>Publication Date</Form.Label>
                 <Form.Control
                   size="sm"
                   type="date"
                   name="book_publish_date"
+                  
+                 defaultValue={defaultPublishDate}
+                  //value={defaultPublishDate}
                   placeholder=""
                   // onChange={usernameAvalabilityChk}
                 />
+
+
+                  <input
+                      id="bookId-frm-id"
+                      name="bookIdForUpdate"
+                      value={bookToEdit.id}
+                      type="text"
+                      hidden
+                    />
+        
               </Form.Group>
 
               {/* <Alert
@@ -126,7 +177,7 @@ export default function OffCanvasAddBook(props) {
                 <Form.Control type="file" size="sm" />
               </Form.Group> */}
 
-              <Button id="offcanvas-add-btn" size="sm" type="submit">
+              <Button id="offcanvas-update-btn" size="sm" type="submit">
                 Submit
               </Button>
             </div>

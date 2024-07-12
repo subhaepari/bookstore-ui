@@ -8,12 +8,14 @@ import GenreManager from './GenreManager';
 import AuthorManager from './AuthorManager';
 import BookManager from './BookManager';
 
+import Header from './Header';
+
 
 function App() {
   return (
     <>
+    <Header/>
     <div>
-      
         <main>
           <Routes>
             <Route path="/" element={<Home/>} />

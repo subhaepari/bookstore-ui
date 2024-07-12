@@ -1,0 +1,14 @@
+.nav-link.active {
+  color: red !important;
+  background-color: yellow !important;
+}
+
+.nav-link {
+  color: white !important;
+  background-color: gray !important;
+}
+
+/* .nav-link.active {
+    color: #206d58 !important;
+    background: rgb(232, 196, 196) !important;
+  } */

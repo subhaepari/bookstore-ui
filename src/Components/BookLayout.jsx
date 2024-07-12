@@ -4,9 +4,11 @@ import Spinner from "./Spinner";
 import useFetch from "../Hooks/useFetch";
 //import PageNotFound from "./PageNotFound";
 
+import { Card, Container, Row, Col, Nav } from "react-bootstrap";
+
 import Book from "./Book";
 
-export default function BookList(props) {
+export default function BookLayout(props) {
 
   const { books: books } = props;
 
@@ -21,7 +23,24 @@ export default function BookList(props) {
            ( <h6 style={{marginLeft: "100px"}}> No books to display!</h6>)
         }
 
-        <Table responsive hover striped>
+         <Container fluid>
+          <Row md={2} lg={3} >
+           
+                  {books.map((book) => (
+                     <Col>
+                      <Book
+                        key={book.id}
+                        book={book}
+                        onDelete={props.onDelete}
+                        onEdit={props.onEdit}
+                      />
+                     </Col>
+                    ))}
+            
+            </Row>
+        </Container> 
+
+        {/* <Table responsive hover striped>
           <tbody>
             {books.map((book) => (
               <Book
@@ -32,7 +51,7 @@ export default function BookList(props) {
               />
             ))}
           </tbody>
-        </Table>
+        </Table>  */}
       </section>
     </>
   );
